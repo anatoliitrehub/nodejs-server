@@ -9,7 +9,6 @@ const listContacts = async () => {
     return JSON.parse(data);
   });
 
-  // console.log(contacts);
   return contacts;
 };
 
