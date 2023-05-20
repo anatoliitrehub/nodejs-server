@@ -1,9 +1,5 @@
 const contactsOperations = require("../models/contacts");
 const HttpError = require("../helpers");
-const {
-  contactAddSchema,
-  contactUpdSchema,
-} = require("../validationSchemas/validationSchemas");
 
 const listContacts = async (req, res, next) => {
   const contacts = await contactsOperations.listContacts();
@@ -23,10 +19,6 @@ const getContactById = async (req, res, next) => {
 
 const addContact = async (req, res, next) => {
   try {
-    const { error } = contactAddSchema.validate(req.body);
-    const missingField = error && [...error.details[0].path];
-    if (error) throw HttpError(400, `missing required ${missingField} field`);
-
     const newContact = await contactsOperations.addContact(req.body);
     if (!newContact) throw HttpError(400, "Something fail, please, try again");
     res.status(201).json(newContact);
@@ -48,10 +40,6 @@ const removeContact = async (req, res, next) => {
 
 const updateContact = async (req, res, next) => {
   try {
-    const { error } = contactUpdSchema.validate(req.body);
-
-    if (error) throw HttpError(400, "missing fields");
-
     const { contactId } = req.params;
     const updContact = await contactsOperations.updateContact(
       contactId,

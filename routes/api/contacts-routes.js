@@ -1,5 +1,11 @@
 const express = require("express");
 
+const { validation } = require("../../middlewares");
+const {
+  contactAddSchema,
+  contactUpdSchema,
+} = require("../../validationSchemas/validationSchemas");
+
 const router = express.Router();
 
 const {
@@ -14,10 +20,10 @@ router.get("/", listContacts);
 
 router.get("/:contactId", getContactById);
 
-router.post("/", addContact);
+router.post("/", validation(contactAddSchema), addContact);
 
 router.delete("/:contactId", removeContact);
 
-router.put("/:contactId", updateContact);
+router.put("/:contactId", validation(contactUpdSchema), updateContact);
 
 module.exports = router;
