@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { validation, isValidId } = require("../../middlewares");
+const { validation, isValidId, authentificate } = require("../../middlewares");
 const {
   contactAddSchema,
   contactUpdSchema,
@@ -17,6 +17,8 @@ const {
   updateContact,
   updateStatusContact,
 } = require("../../controllers/contacts-controller");
+
+router.use(authentificate);
 
 router.get("/", listContacts);
 

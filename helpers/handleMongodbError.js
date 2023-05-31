@@ -1,6 +1,7 @@
 const handleMongodbError = (error, data, next) => {
-  error.status = 400;
+  const { name, code } = error;
   console.log("handleError");
+  error.status = name === "MongoServerError" && code === 11000 ? 409 : 400;
   next();
 };
 
