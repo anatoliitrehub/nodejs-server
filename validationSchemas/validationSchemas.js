@@ -30,8 +30,7 @@ const userUpdSubcrSchema = Joi.object({
   subscription: Joi.string()
     .trim()
     .valid("starter", "pro", "business")
-    .required()
-    
+    .required(),
 });
 
 const contactMongoSchema = new Schema(
