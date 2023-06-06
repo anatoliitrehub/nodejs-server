@@ -7,6 +7,7 @@ const fs = require("fs/promises");
 const { SECRET_KEY } = process.env;
 const gravatar = require("gravatar");
 const avatarDir = path.join(__dirname, "../", "public", "avatars");
+const Jimp = require("jimp");
 
 const userRegister = async (req, res, next) => {
   const { email, password } = req.body;
@@ -83,6 +84,13 @@ const updateAvatar = async (req, res) => {
   const fileName = `${_id}_${originalname}`;
   const resUpl = path.join(avatarDir, fileName);
   await fs.rename(tempUpload, resUpl);
+  Jimp.read(resUpl)
+    .then((avatar) => {
+      return avatar.resize(250, 250).write(resUpl);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   const avatarUrl = path.join("avatars", fileName);
   await User.findByIdAndUpdate(_id, { avatarUrl });
 
