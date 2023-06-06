@@ -57,26 +57,33 @@ const contactMongoSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-const userMongoSchema = new Schema({
-  password: {
-    type: String,
-    required: [true, "Set password for user"],
+const userMongoSchema = new Schema(
+  {
+    password: {
+      type: String,
+      required: [true, "Set password for user"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+    },
+    subscription: {
+      type: String,
+      enum: ["starter", "pro", "business"],
+      default: "starter",
+    },
+    token: {
+      type: String,
+      default: "",
+    },
+    avatarUrl: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-  },
-  subscription: {
-    type: String,
-    enum: ["starter", "pro", "business"],
-    default: "starter",
-  },
-  token: {
-    type: String,
-    default: "",
-  },
-});
+  { versionKey: false, timestamps: true }
+);
 
 module.exports = {
   contactAddSchema,
