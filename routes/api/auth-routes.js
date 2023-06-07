@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { validation, authentificate } = require("../../middlewares");
+const { validation, authentificate, upload } = require("../../middlewares");
 
 const {
   userSchema,
@@ -15,6 +15,7 @@ const {
   userCurrent,
   userLogout,
   userUpdSubscr,
+  updateAvatar,
 } = require("../../controllers/auth-controller");
 
 router.post("/register", validation(userSchema), userRegister);
@@ -31,5 +32,7 @@ router.patch(
   validation(userUpdSubcrSchema),
   userUpdSubscr
 );
+
+router.patch("/avatars", authentificate, upload.single("avatar"), updateAvatar);
 
 module.exports = router;
