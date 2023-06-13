@@ -33,6 +33,10 @@ const userUpdSubcrSchema = Joi.object({
     .required(),
 });
 
+const userEmailVerifySchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
 const contactMongoSchema = new Schema(
   {
     name: {
@@ -81,6 +85,14 @@ const userMongoSchema = new Schema(
       type: String,
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -92,5 +104,6 @@ module.exports = {
   contactMongoSchema,
   userSchema,
   userUpdSubcrSchema,
+  userEmailVerifySchema,
   userMongoSchema,
 };
