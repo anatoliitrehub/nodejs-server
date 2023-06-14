@@ -33,7 +33,7 @@ const userRegister = async (req, res, next) => {
     },
   });
 
-  const verifyText = `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Email verification link</a>`;
+  const verifyText = `<a target="_blank" href="${BASE_URL}/users/verify/${verificationToken}">Email verification link</a>`;
 
   const verifyEmail = {
     to: email,
@@ -63,7 +63,7 @@ const userResendVerifyEmail = async (req, res, next) => {
   if (!user) throw HttpError(404, "User not found");
   if (user.verify) throw HttpError(400, "Verification has already been passed");
 
-  const verifyText = `<a target="_blank" href="${BASE_URL}/api/auth/verify/${user.verificationToken}">Email verification link</a>`;
+  const verifyText = `<a target="_blank" href="${BASE_URL}/users/verify/${user.verificationToken}">Email verification link</a>`;
 
   const verifyEmail = {
     to: email,
