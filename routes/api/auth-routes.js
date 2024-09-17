@@ -5,12 +5,15 @@ const { validation, authentificate, upload } = require("../../middlewares");
 const {
   userSchema,
   userUpdSubcrSchema,
+  userEmailVerifySchema,
 } = require("../../validationSchemas/validationSchemas");
 
 const router = express.Router();
 
 const {
   userRegister,
+  userVerify,
+  userResendVerifyEmail,
   userLogin,
   userCurrent,
   userLogout,
@@ -19,6 +22,14 @@ const {
 } = require("../../controllers/auth-controller");
 
 router.post("/register", validation(userSchema), userRegister);
+
+router.get("/verify/:verificationToken", userVerify);
+
+router.post(
+  "/verify",
+  validation(userEmailVerifySchema),
+  userResendVerifyEmail
+);
 
 router.post("/login", validation(userSchema), userLogin);
 
